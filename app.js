@@ -1,10 +1,12 @@
 const express = require("express");
-
 const app = express();
 const { API_VERSION } = require("./config");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+//Load routers
+const userRoutes = require("./routers/user");
 
 //Configure header HTTP
 app.use((req, res, next) => {
@@ -17,5 +19,8 @@ app.use((req, res, next) => {
   res.header("Allow", "GET, POST, OPTIONS, PUT, DELETE");
   next();
 });
+
+//Routers
+app.use(`/api/${API_VERSION}`, userRoutes);
 
 module.exports = app;
