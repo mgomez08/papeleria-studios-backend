@@ -1,4 +1,4 @@
-# 📚 _Backend para Papeleria-Studios app_
+# 📚 _Backend para Papeleria-Studios_
 
 ## API BaseURL
 
