@@ -6,6 +6,8 @@ const USER = process.env.USER;
 const PASSWORD = process.env.PASSWORD;
 const DATABASE = process.env.DATABASE;
 const PORT_DB = process.env.PORT_DB;
+const DB_DIALECT = process.env.DB_DIALECT;
+
 module.exports = {
   API_VERSION,
   HOST,
@@ -13,4 +15,5 @@ module.exports = {
   PASSWORD,
   DATABASE,
   PORT_DB,
+  DB_DIALECT,
 };

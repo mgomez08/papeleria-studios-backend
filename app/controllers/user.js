@@ -1,4 +1,4 @@
-const sequelize = require("../database/db");
+const { sequelize } = require("../models/index");
 
 function test(req, res) {
   try {

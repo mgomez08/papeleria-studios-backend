@@ -1,7 +1,7 @@
-const app = require("./app");
+const app = require("./app/app");
 const port = process.env.PORT || 3900;
 
-const { API_VERSION, HOST } = require("./config");
+const { API_VERSION, HOST } = require("./config/variables");
 
 app.listen(port, () => {
   console.log("######################");
