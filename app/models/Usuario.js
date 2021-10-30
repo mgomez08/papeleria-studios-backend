@@ -21,11 +21,13 @@ module.exports = (sequelize, DataTypes) => {
           isAlpha: {
             msg: "El nombre no puede contener numeros",
           },
+          len: [2, 80],
         },
       },
       correo: {
         type: DataTypes.STRING(80),
         allowNull: false,
+        unique: true,
         validate: {
           isEmail: {
             msg: "El correo no es valido",
@@ -46,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Usuarios",
+      modelName: "Usuario",
     }
   );
   return Usuario;
