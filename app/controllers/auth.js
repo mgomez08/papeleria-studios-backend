@@ -65,7 +65,17 @@ const signIn = async (req, res) => {
   }
 };
 
+const refreshToken = async (req, res) => {
+  const user = {
+    id: req.user.id,
+    nombre: req.user.nombre,
+    correo: req.user.correo,
+  };
+  const token = await generateJWT(user);
+  res.json({ ok: true, token });
+};
 module.exports = {
   signIn,
   signUp,
+  refreshToken,
 };
