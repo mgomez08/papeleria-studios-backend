@@ -7,6 +7,7 @@ app.use(express.json());
 
 //Load routers
 const authRoutes = require("./routers/auth");
+const categoryRoutes = require("./routers/category");
 
 //Configure header HTTP
 app.use((req, res, next) => {
@@ -22,5 +23,6 @@ app.use((req, res, next) => {
 
 //Routers
 app.use(`/api/${API_VERSION}/auth`, authRoutes);
+app.use(`/api/${API_VERSION}/category`, categoryRoutes);
 
 module.exports = app;
