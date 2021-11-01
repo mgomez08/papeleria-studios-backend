@@ -41,15 +41,9 @@ const deleteCategory = async (req, res) => {
         id,
       },
     });
-    const category = await Categoria.findOne({
-      where: {
-        id,
-      },
-    });
     return res.status(200).send({
       ok: true,
       msg: "Categoria eliminada correctamente",
-      category,
     });
   } catch (error) {
     console.error("Ocurrió el siguiente error:", error);
