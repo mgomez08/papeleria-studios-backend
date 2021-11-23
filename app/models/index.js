@@ -14,7 +14,7 @@ let sequelize = new Sequelize(
   config.password,
   config
 );
-
+// sequelize.sync({ force: false });
 //Associations
 fs.readdirSync(__dirname)
   .filter((file) => {
