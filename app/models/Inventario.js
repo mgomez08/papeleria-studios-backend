@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Inventario extends Model {
     /**
@@ -10,14 +8,37 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      models.Producto.hasOne(models.Inventario, {
+        foreignKey: {
+          name: "id_producto",
+          allowNull: false,
+        },
+      });
+      models.Inventario.belongsTo(models.Producto, {
+        foreignKey: "id_producto",
+      });
     }
-  };
-  Inventario.init({
-    can_total: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Inventario',
-  });
+  }
+  Inventario.init(
+    {
+      can_total: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "El campo cantidad total no puede estar vacio",
+          },
+          isNumeric: {
+            msg: "El campo cantidad total debe ser numerico",
+          },
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "Inventario",
+      tableName: "inventario",
+    }
+  );
   return Inventario;
 };

@@ -2,5 +2,6 @@
   "20211030160156-create-usuario.js",
   "20211101033149-create-categoria.js",
   "20211101183916-create-proveedor.js",
-  "20211122185401-create-producto.js"
+  "20211122185401-create-producto.js",
+  "20211124003847-create-inventario.js"
 ]
