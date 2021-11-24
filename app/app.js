@@ -10,6 +10,7 @@ const authRoutes = require("./routers/auth");
 const categoryRoutes = require("./routers/category");
 const providerRoutes = require("./routers/provider");
 const productRoutes = require("./routers/product");
+const inventoryRoutes = require("./routers/inventory");
 
 //Configure header HTTP
 app.use((req, res, next) => {
@@ -28,5 +29,6 @@ app.use(`/api/${API_VERSION}/auth`, authRoutes);
 app.use(`/api/${API_VERSION}/category`, categoryRoutes);
 app.use(`/api/${API_VERSION}/provider`, providerRoutes);
 app.use(`/api/${API_VERSION}/product`, productRoutes);
+app.use(`/api/${API_VERSION}/inventory`, inventoryRoutes);
 
 module.exports = app;
