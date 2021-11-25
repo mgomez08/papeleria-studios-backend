@@ -5,5 +5,6 @@
   "20211122185401-create-producto.js",
   "20211124003847-create-inventario.js",
   "20211124163454-create-venta.js",
-  "20211124171903-create-pedido.js"
+  "20211124171903-create-pedido.js",
+  "20211125170449-create-rol.js"
 ]
