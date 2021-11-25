@@ -20,15 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       valor_total: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notEmpty: {
-            msg: "La cantidad de producto es requerida",
-          },
-          isNumeric: {
-            msg: "La cantidad de producto debe ser un número",
-          },
-        },
+        allowNull: true,
       },
     },
     {
