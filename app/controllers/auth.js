@@ -21,6 +21,7 @@ const signUp = async (req, res) => {
       nombre,
       correo,
       password: hash,
+      id_rol: 1,
     });
     const token = await generateJWT(user.dataValues);
     return res.status(200).send({ ok: true, token });
