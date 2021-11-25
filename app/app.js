@@ -12,6 +12,7 @@ const providerRoutes = require("./routers/provider");
 const productRoutes = require("./routers/product");
 const inventoryRoutes = require("./routers/inventory");
 const orderRoutes = require("./routers/order");
+const saleRoutes = require("./routers/sale");
 
 //Configure header HTTP
 app.use((req, res, next) => {
@@ -32,5 +33,6 @@ app.use(`/api/${API_VERSION}/provider`, providerRoutes);
 app.use(`/api/${API_VERSION}/product`, productRoutes);
 app.use(`/api/${API_VERSION}/inventory`, inventoryRoutes);
 app.use(`/api/${API_VERSION}/order`, orderRoutes);
+app.use(`/api/${API_VERSION}/sale`, saleRoutes);
 
 module.exports = app;
