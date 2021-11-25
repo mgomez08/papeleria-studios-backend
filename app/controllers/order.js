@@ -54,7 +54,26 @@ const deleteOrder = async (id) => {
     console.error("Ocurrió el siguiente error:", error);
   }
 };
+
+const getOrders = async (req, res) => {
+  try {
+    const orders = await Pedido.findAll({
+      order: [["updated_at", "DESC"]],
+    });
+    return res.status(200).send({
+      ok: true,
+      orders,
+    });
+  } catch (error) {
+    console.error("Ocurrió el siguiente error:", error);
+    return res.status(500).send({
+      ok: false,
+      msg: "Error al obtener los pedidos.",
+    });
+  }
+};
 module.exports = {
   createOrder,
   deleteOrder,
+  getOrders,
 };
