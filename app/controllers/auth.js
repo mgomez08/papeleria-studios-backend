@@ -33,7 +33,6 @@ const signUp = async (req, res) => {
 
 const signIn = async (req, res) => {
   let { correo, password } = req.body;
-  console.log(req.body);
   if (!correo || !password) {
     return res.status(400).send({
       ok: false,
@@ -45,6 +44,7 @@ const signIn = async (req, res) => {
       where: {
         correo: correo,
       },
+      attributes: ["nombre", "correo", "password"],
     });
     if (!user) {
       return res.status(400).send({
@@ -59,10 +59,11 @@ const signIn = async (req, res) => {
         msg: "Correo o contraseña incorrectas.",
       });
     }
+    delete user.dataValues.password;
     const token = await generateJWT(user.dataValues);
     return res
       .status(200)
-      .send({ ok: true, msg: "Login correcto, redirigiendo", token });
+      .send({ ok: true, msg: "Login correcto, redirigiendo", token, user });
   } catch (error) {
     console.error("Ocurrió el siguiente error:", error);
     return res.status(400).send({ ok: false, msg: error.message });
@@ -76,7 +77,8 @@ const refreshToken = async (req, res) => {
     correo: req.user.correo,
   };
   const token = await generateJWT(user);
-  res.json({ ok: true, token });
+  delete user.id;
+  res.json({ ok: true, token, user });
 };
 module.exports = {
   signIn,
