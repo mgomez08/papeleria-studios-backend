@@ -8,7 +8,6 @@ const generateJWT = (usuario) => {
       nombre: usuario.nombre,
       correo: usuario.correo,
     };
-    console.log(payload);
     jwt.sign(payload, secretKey, { expiresIn }, (err, token) => {
       if (err) {
         console.log(err);
