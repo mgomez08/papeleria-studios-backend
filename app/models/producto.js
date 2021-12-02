@@ -45,6 +45,18 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      url_image: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "La url de la imagen del producto es requerida",
+          },
+          isUrl: {
+            msg: "La url de la imagen del producto debe ser una url valida",
+          },
+        },
+      },
     },
     {
       sequelize,
