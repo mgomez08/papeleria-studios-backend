@@ -1,8 +1,8 @@
 const { Producto } = require("../models/index");
 
 const createProduct = async (req, res) => {
-  let { nombre, precio, id_categoria, id_proveedor } = req.body;
-  if (!nombre || !precio || !id_categoria || !id_proveedor) {
+  let { nombre, precio, url_image, id_categoria, id_proveedor } = req.body;
+  if (!nombre || !precio || url_image || !id_categoria || !id_proveedor) {
     return res.status(400).send({
       ok: false,
       msg: "Todos los campos son obligatorios",
@@ -14,6 +14,7 @@ const createProduct = async (req, res) => {
       valor_unitario: precio,
       id_categoria,
       id_proveedor,
+      url_image,
     });
     return res.status(200).send({
       ok: true,
@@ -58,8 +59,10 @@ const deleteProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  let { id, nombre, precio, id_categoria, id_proveedor } = req.body;
-  if ((!id, !nombre || !precio || !id_categoria || !id_proveedor)) {
+  let { id, nombre, precio, url_image, id_categoria, id_proveedor } = req.body;
+  if (
+    (!id, !nombre || !precio || url_image || !id_categoria || !id_proveedor)
+  ) {
     return res.status(400).send({
       ok: false,
       msg: "Todos los campos son obligatorios",
@@ -70,6 +73,7 @@ const updateProduct = async (req, res) => {
       {
         nom_produc: nombre,
         valor_unitario: precio,
+        url_image,
         id_categoria,
         id_proveedor,
       },
