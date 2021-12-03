@@ -1,4 +1,4 @@
-const { Producto } = require("../models/index");
+const { Producto, Categoria, Proveedor } = require("../models/index");
 
 const createProduct = async (req, res) => {
   let { nombre, precio, url_image, id_categoria, id_proveedor } = req.body;
@@ -104,8 +104,25 @@ const updateProduct = async (req, res) => {
 
 const getProducts = async (req, res) => {
   try {
-    const products = await Producto.findAll({
+    let products = await Producto.findAll({
       order: [["nom_produc", "ASC"]],
+      include: [
+        {
+          model: Categoria,
+          attributes: ["id", "nom_cat"],
+        },
+        {
+          model: Proveedor,
+          attributes: ["id", "nom_prov"],
+        },
+      ],
+    });
+    products = products.map((product) => {
+      let tmp = product.dataValues.Categorium;
+      delete product.dataValues.Categorium;
+      product.dataValues.Categoria = tmp;
+      console.log(product);
+      return product;
     });
     return res.status(200).send({
       ok: true,
