@@ -105,7 +105,7 @@ const updateProduct = async (req, res) => {
 const getProducts = async (req, res) => {
   try {
     const products = await Producto.findAll({
-      order: [["updated_at", "DESC"]],
+      order: [["nom_produc", "ASC"]],
     });
     return res.status(200).send({
       ok: true,

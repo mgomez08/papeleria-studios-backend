@@ -96,7 +96,7 @@ const updateProvider = async (req, res) => {
 const getProviders = async (req, res) => {
   try {
     const providers = await Proveedor.findAll({
-      order: [["updated_at", "DESC"]],
+      order: [["nom_prov", "ASC"]],
     });
     return res.status(200).send({
       ok: true,

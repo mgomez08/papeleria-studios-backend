@@ -96,7 +96,7 @@ const updateCategory = async (req, res) => {
 const getCategories = async (req, res) => {
   try {
     const categories = await Categoria.findAll({
-      order: [["updated_at", "DESC"]],
+      order: [["nom_cat", "ASC"]],
     });
     return res.status(200).send({
       ok: true,
