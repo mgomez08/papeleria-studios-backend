@@ -2,20 +2,40 @@ const { Producto, Categoria, Proveedor } = require("../models/index");
 
 const createProduct = async (req, res) => {
   let { nombre, precio, url_image, id_categoria, id_proveedor } = req.body;
-  if (!nombre || !precio || url_image || !id_categoria || !id_proveedor) {
+  if (!nombre || !precio || !url_image || !id_categoria || !id_proveedor) {
     return res.status(400).send({
       ok: false,
       msg: "Todos los campos son obligatorios",
     });
   }
   try {
-    const product = await Producto.create({
+    let product = await Producto.create({
       nom_produc: nombre,
       valor_unitario: precio,
       id_categoria,
       id_proveedor,
       url_image,
     });
+    product = await Producto.findOne({
+      where: {
+        id: product.id,
+      },
+      include: [
+        {
+          model: Categoria,
+          attributes: ["id", "nom_cat"],
+        },
+        {
+          model: Proveedor,
+          attributes: ["id", "nom_prov"],
+        },
+      ],
+    });
+
+    let tmp = product.dataValues.Categorium;
+    delete product.dataValues.Categorium;
+    product.dataValues.Categoria = tmp;
+
     return res.status(200).send({
       ok: true,
       msg: "Producto creado correctamente",
@@ -61,7 +81,7 @@ const deleteProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   let { id, nombre, precio, url_image, id_categoria, id_proveedor } = req.body;
   if (
-    (!id, !nombre || !precio || url_image || !id_categoria || !id_proveedor)
+    (!id, !nombre || !precio || !url_image || !id_categoria || !id_proveedor)
   ) {
     return res.status(400).send({
       ok: false,
@@ -87,7 +107,21 @@ const updateProduct = async (req, res) => {
       where: {
         id,
       },
+      include: [
+        {
+          model: Categoria,
+          attributes: ["id", "nom_cat"],
+        },
+        {
+          model: Proveedor,
+          attributes: ["id", "nom_prov"],
+        },
+      ],
     });
+    let tmp = product.dataValues.Categorium;
+    delete product.dataValues.Categorium;
+    product.dataValues.Categoria = tmp;
+
     return res.status(200).send({
       ok: true,
       msg: "Producto actualizado correctamente",
@@ -121,7 +155,6 @@ const getProducts = async (req, res) => {
       let tmp = product.dataValues.Categorium;
       delete product.dataValues.Categorium;
       product.dataValues.Categoria = tmp;
-      console.log(product);
       return product;
     });
     return res.status(200).send({
