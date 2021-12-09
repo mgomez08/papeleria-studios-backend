@@ -1,4 +1,4 @@
-const { Inventario } = require("../models/index");
+const { Inventario, Producto } = require("../models/index");
 
 const createInventory = async (req, res) => {
   let { cantidad, id_producto } = req.body;
@@ -9,9 +9,20 @@ const createInventory = async (req, res) => {
     });
   }
   try {
-    const inventory = await Inventario.create({
+    let inventory = await Inventario.create({
       can_total: cantidad,
       id_producto,
+    });
+    inventory = await Inventario.findOne({
+      where: {
+        id: inventory.id,
+      },
+      include: [
+        {
+          model: Producto,
+          attributes: ["id", "nom_produc"],
+        },
+      ],
     });
     return res.status(200).send({
       ok: true,
@@ -79,6 +90,12 @@ const updateInventory = async (req, res) => {
       where: {
         id,
       },
+      include: [
+        {
+          model: Producto,
+          attributes: ["id", "nom_produc"],
+        },
+      ],
     });
     return res.status(200).send({
       ok: true,
@@ -98,6 +115,12 @@ const getInventory = async (req, res) => {
   try {
     const inventory = await Inventario.findAll({
       order: [["updated_at", "DESC"]],
+      include: [
+        {
+          model: Producto,
+          attributes: ["id", "nom_produc"],
+        },
+      ],
     });
     return res.status(200).send({
       ok: true,
