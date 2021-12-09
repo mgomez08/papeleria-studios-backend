@@ -12,10 +12,15 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: {
           name: "id_producto",
           allowNull: false,
+          unique: true,
         },
       });
       models.Inventario.belongsTo(models.Producto, {
-        foreignKey: "id_producto",
+        foreignKey: {
+          name: "id_producto",
+          allowNull: false,
+          unique: true,
+        },
       });
       models.Inventario.hasMany(models.Venta, {
         foreignKey: {
