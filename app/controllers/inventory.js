@@ -33,7 +33,7 @@ const createInventory = async (req, res) => {
     console.error("Ocurrió el siguiente error:", error);
     return res.status(500).send({
       ok: false,
-      msg: "Error al crear el inventario del producto",
+      msg: "Error al crear el inventario del producto, verifique que no esté creando varios inventarios para el mismo producto",
     });
   }
 };
@@ -106,7 +106,7 @@ const updateInventory = async (req, res) => {
     console.error("Ocurrió el siguiente error:", error);
     return res.status(500).send({
       ok: false,
-      msg: "Error al actualizar el producto",
+      msg: "Error al actualizar el producto, verifique que no esté creando varios inventarios para el mismo producto",
     });
   }
 };
