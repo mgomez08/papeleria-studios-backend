@@ -4,7 +4,7 @@ const { createSales } = require("../controllers/sale");
 const createOrder = async (req, res) => {
   let { sales } = req.body;
   if (!sales) {
-    res.status(400).send({
+    return res.status(400).send({
       ok: false,
       msg: "Se requiere crear al menos una venta.",
     });
@@ -14,7 +14,7 @@ const createOrder = async (req, res) => {
     sales.forEach((sale) => (valor_total += sale.valor_venta));
 
     //Crear pedido
-    const order = await Pedido.create({
+    var order = await Pedido.create({
       valor_total,
     });
     //Asignar el id del pedido a cada una de las ventas
@@ -33,6 +33,7 @@ const createOrder = async (req, res) => {
     });
   } catch (error) {
     console.error("Ocurrió el siguiente error:", error);
+    await deleteOrder(order.id);
     return res.status(500).send({
       ok: false,
       msg: "Error al crear el pedido",
