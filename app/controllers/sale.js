@@ -1,9 +1,8 @@
 const { response } = require("express");
-const { Venta } = require("../models/index");
+const { Venta, Inventario } = require("../models/index");
 const { deleteOrder } = require("./order");
 
 const createSales = async (sales) => {
-  console.log(sales);
   if (!sales) {
     return res.status(400).json({
       ok: false,
@@ -11,10 +10,16 @@ const createSales = async (sales) => {
     });
   }
   try {
-    return Venta.bulkCreate(sales, { validate: true });
+    const salesResult = await Venta.bulkCreate(sales, { validate: true });
+    salesResult.forEach(async (sale) => {
+      await Inventario.increment(
+        { can_total: -sale.cant_producto },
+        { where: { id: sale.id_inventario } }
+      );
+    });
+    return salesResult;
   } catch (error) {
     console.error("Ocurrió el siguiente error:", error);
-    deleteOrder(sales[0].id_pedido);
   }
 };
 
