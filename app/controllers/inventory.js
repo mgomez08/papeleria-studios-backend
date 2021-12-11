@@ -1,4 +1,5 @@
 const { Inventario, Producto } = require("../models/index");
+const { Op } = require("sequelize");
 
 const createInventory = async (req, res) => {
   let { cantidad, id_producto } = req.body;
@@ -20,7 +21,7 @@ const createInventory = async (req, res) => {
       include: [
         {
           model: Producto,
-          attributes: ["id", "nom_produc"],
+          attributes: ["id", "nom_produc", "valor_unitario"],
         },
       ],
     });
@@ -93,7 +94,7 @@ const updateInventory = async (req, res) => {
       include: [
         {
           model: Producto,
-          attributes: ["id", "nom_produc"],
+          attributes: ["id", "nom_produc", "valor_unitario"],
         },
       ],
     });
@@ -118,7 +119,7 @@ const getInventory = async (req, res) => {
       include: [
         {
           model: Producto,
-          attributes: ["id", "nom_produc"],
+          attributes: ["id", "nom_produc", "valor_unitario"],
         },
       ],
     });
@@ -135,9 +136,41 @@ const getInventory = async (req, res) => {
     });
   }
 };
+
+const getInventoryWithStock = async (req, res) => {
+  try {
+    const inventory = await Inventario.findAll({
+      where: {
+        can_total: {
+          [Op.gt]: 0,
+        },
+      },
+      order: [["updated_at", "DESC"]],
+      include: [
+        {
+          model: Producto,
+          attributes: ["id", "nom_produc", "valor_unitario"],
+        },
+      ],
+    });
+    return res.status(200).send({
+      ok: true,
+      msg: "Inventario obtenido correctamente",
+      inventory,
+    });
+  } catch (error) {
+    console.error("Ocurrió el siguiente error:", error);
+    return res.status(500).send({
+      ok: false,
+      msg: "Error al obtener el inventario",
+    });
+  }
+};
+
 module.exports = {
   createInventory,
   deleteInventory,
   updateInventory,
   getInventory,
+  getInventoryWithStock,
 };
