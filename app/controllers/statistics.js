@@ -217,7 +217,7 @@ const getProvidersMoreAndFewerProducts = async () => {
     ],
   });
   let PrFewerProducts = PrMoreProducts.sort(function (a, b) {
-    return b.dataValues.cantidad_productos - a.dataValues.cantidad_productos;
+    return a.dataValues.cantidad_productos - b.dataValues.cantidad_productos;
   });
   PrFewerProducts = PrFewerProducts.slice(0, 10);
   PrMoreProducts = PrMoreProducts.sort(function (a, b) {
