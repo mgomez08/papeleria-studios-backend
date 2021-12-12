@@ -15,6 +15,7 @@ const productRoutes = require("./routers/product");
 const inventoryRoutes = require("./routers/inventory");
 const orderRoutes = require("./routers/order");
 const saleRoutes = require("./routers/sale");
+const statiticsRoutes = require("./routers/statistics");
 
 //Routers
 app.use(`/api/${API_VERSION}/auth`, authRoutes);
@@ -24,5 +25,6 @@ app.use(`/api/${API_VERSION}/product`, productRoutes);
 app.use(`/api/${API_VERSION}/inventory`, inventoryRoutes);
 app.use(`/api/${API_VERSION}/order`, orderRoutes);
 app.use(`/api/${API_VERSION}/sale`, saleRoutes);
+app.use(`/api/${API_VERSION}/statistics`, statiticsRoutes);
 
 module.exports = app;
