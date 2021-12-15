@@ -171,9 +171,41 @@ const getProducts = async (req, res) => {
   }
 };
 
+const getProductsForUser = async (req, res) => {
+  try {
+    let categoriasWithProducts = await Categoria.findAll({
+      order: [["nom_cat", "ASC"]],
+      include: [
+        {
+          model: Producto,
+          include: [
+            {
+              model: Proveedor,
+              attributes: ["id", "nom_prov"],
+            },
+          ],
+        },
+      ],
+    });
+
+    return res.status(200).send({
+      ok: true,
+      msg: "Productos obtenidos correctamente",
+      data: categoriasWithProducts,
+    });
+  } catch (error) {
+    console.error("Ocurrió el siguiente error:", error);
+    return res.status(500).send({
+      ok: false,
+      msg: "Error al obtener los productos",
+    });
+  }
+};
+
 module.exports = {
   createProduct,
   deleteProduct,
   updateProduct,
   getProducts,
+  getProductsForUser,
 };

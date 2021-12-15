@@ -8,5 +8,6 @@ api.post("/", validateJWT, ProductController.createProduct);
 api.delete("/", validateJWT, ProductController.deleteProduct);
 api.put("/", validateJWT, ProductController.updateProduct);
 api.get("/", validateJWT, ProductController.getProducts);
+api.get("/products", ProductController.getProductsForUser);
 
 module.exports = api;
