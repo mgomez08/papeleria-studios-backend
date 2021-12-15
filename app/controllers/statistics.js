@@ -281,6 +281,52 @@ const getTotallyDataSystem = async () => {
   };
 };
 
+const getProductsMostSelled = async (req, res) => {
+  try {
+    let PHighestQuantitySold = await Venta.findAll({
+      attributes: [
+        "id",
+        [
+          sequelize.fn("sum", sequelize.col("cant_producto")),
+          "cantidad_productos",
+        ],
+      ],
+      group: "id_inventario",
+      include: [
+        {
+          model: Inventario,
+          attributes: ["id"],
+          include: [
+            {
+              model: Producto,
+              include: [
+                {
+                  model: Proveedor,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    PHighestQuantitySold = PHighestQuantitySold.sort(function (a, b) {
+      return b.dataValues.cantidad_productos - a.dataValues.cantidad_productos;
+    });
+    PHighestQuantitySold = PHighestQuantitySold.slice(0, 5);
+    return res.status(200).send({
+      ok: true,
+      msg: "Productos obtenidos correctamente",
+      data: PHighestQuantitySold,
+    });
+  } catch (error) {
+    console.error("Ocurrió el siguiente error:", error);
+    return res.status(500).send({
+      ok: false,
+      msg: "Error al obtener los productos",
+    });
+  }
+};
 module.exports = {
   getStatistics,
+  getProductsMostSelled,
 };
